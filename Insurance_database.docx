@@ -1,0 +1,76 @@
+					
+						Insurance Database 
+use lab1;
+
+	i)					Creating Table 
+
+CREATE TABLE Person(
+ Name char(30),
+ driver_id char(30) Primary key,
+ Address char(30)
+);
+Create table car(
+ Regno char(30) Primary key,
+ model char(30),
+ year int
+);
+create table Accident(
+ report_number int Unique Not null,
+ date date,
+ location char(30)
+);
+create table owns(
+ driver_id char (30) primary key,
+ RegNo char(30),
+ foreign key (RegNo) references car(Regno) on delete cascade on update cascade);
+create table Participated(
+ driver_id char(30),
+ Regno char(30) Not null,
+ report_number int,
+ damage_amount int,
+ foreign key (report_number) references accident(report_number) on delete cascade on update cascade,
+ foreign key (driver_id) references person(driver_id) on delete cascade on update cascade,
+ foreign key (Regno) references car(Regno) on delete cascade on update cascade
+);
+	
+	2)					Inserting into Tables
+
+INSERT INTO person(name,driver_id,Address) values('Pranav','driver1','bangalore');
+INSERT INTO person(name,driver_id,Address) values('Prateek','driver2','bangalore');
+INSERT INTO person(name,driver_id,Address) values('Arka','driver3','bangalore');
+INSERT INTO person(name,driver_id,Address) values('Aysuh','driver4','bangalore');
+INSERT INTO person(name,driver_id,Address) values('Saurab','driver5','bangalore');
+INSERT INTO car values('reg1','model1','2005');
+INSERT INTO car values('reg2','model1','2008');
+INSERT INTO car values('reg3','model2','2006');
+INSERT INTO car values('reg4','model1','2008');
+INSERT INTO car values('reg5','model2','2005');
+INSERT INTO accident values (1,'2005-10-12','bangalore');
+INSERT INTO accident values (2,'2008-08-01','bangalore');
+INSERT INTO accident values (3,'2006-10-30','bangalore');
+INSERT INTO accident values (4,'2008-01-25','bangalore');
+INSERT INTO accident values (5,'2005-06-22','bangalore');
+INSERT INTO owns(driver_id,RegNo) values('Pranav','reg1');
+INSERT INTO owns(driver_id,RegNo) values('Prateek','reg2');
+INSERT INTO owns(driver_id,RegNo) values('Arka','reg3');
+INSERT INTO owns(driver_id,RegNo) values('Ayush','reg4');
+INSERT INTO owns(driver_id,RegNo) values('Saurab','reg5'); 
+INSERT INTO participated values('driver1','reg1',1,10000); 
+INSERT INTO participated values('driver2','reg1',2,12000); 
+INSERT INTO participated values('driver3','reg1',3,16000); 
+INSERT INTO participated values('driver4','reg1',4,18000); 
+INSERT INTO participated values('driver5','reg1',5,20000); 
+
+	3)			Updating amount 
+update participated set damage_amount=12000 where regno='reg1' and report_number>=12 and report_number<=25000;
+
+	4)			total number of people involved in accidents in 2008
+select count(Regno) from car where year='2008';
+select * from car;
+	5)			total number of accidents to a specific model
+select count(Regno) from car where model='model2';
+
+
+
+
+
